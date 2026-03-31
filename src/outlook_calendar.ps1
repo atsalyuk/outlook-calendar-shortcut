@@ -195,7 +195,8 @@ class OutlookCalendar
             }
             $startTime = $item.Start.ToString("h:mm")
             $endTime = $item.End.ToString("h:mm tt")
-            $preview += "{0} `u{2013} {1}`n{2}" -f $startTime, $endTime, $item.Subject
+            $dash = [char]0x2013
+            $preview += "{0} $dash {1}`n{2}" -f $startTime, $endTime, $item.Subject
             ++$count
         }
         return $preview

@@ -69,10 +69,24 @@ class Window
 
     [void] OnContentRendered()
     {
+        # Immediately minimize the window after the thumbnail is rendered.
+        $this.window.WindowState = [System.Windows.WindowState]::Minimized
     }
 
     [void] OnStateChanged()
     {
+        if ($this.window.WindowState -eq [System.Windows.WindowState]::Minimized)
+        {
+            return
+        }
+
+        # Re-minimize immediately so the window never visually appears.
+        $this.window.WindowState = [System.Windows.WindowState]::Minimized
+
+        if ($this.onClicked)
+        {
+            $this.onClicked.Invoke()
+        }
     }
 
     [void] SetOnClickedFunction($block)
