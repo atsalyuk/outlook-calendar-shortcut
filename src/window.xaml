@@ -1,8 +1,8 @@
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 Width="320" Height="180"
-AllowsTransparency="False"
-Background="#FF1F1F1F"
+AllowsTransparency="True"
+Background="Transparent"
 WindowStyle="None">
     <Grid>
         <Border Margin="8"
@@ -15,7 +15,7 @@ WindowStyle="None">
                            FontSize="12"
                            FontWeight="Bold"
                            Margin="0,0,0,6"/>
-                <TextBlock x:Name="DailyPreviewText"
+                <TextBlock Name="DailyPreviewText"
                            Text="No upcoming events."
                            Foreground="White"
                            FontFamily="Consolas"
