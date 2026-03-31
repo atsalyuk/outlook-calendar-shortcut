@@ -145,7 +145,7 @@ class OutlookCalendar
         $endOfToday = $now.AddDays(1).Date
         $nowString = $now.ToString("g")
         $endOfTodayString = $endOfToday.ToString("g")
-        $query = "[Start] < '$endOfTodayString' And [End] > '$nowString'"
+        $query = "[Start] >= '$nowString' And [Start] < '$endOfTodayString'"
 
         $items = $this.folder.Items
         $items.IncludeRecurrences = $true
@@ -237,28 +237,15 @@ class OutlookCalendar
 
         try
         {
-            $explorer = $this.outlook.ActiveExplorer()
-            if (-not $explorer)
-            {
-                $olFolderInbox = 6
-                $inbox = $this.namespace.GetDefaultFolder($olFolderInbox)
-                if ($inbox)
-                {
-                    $inbox.Display()
-                }
-                $explorer = $this.outlook.ActiveExplorer()
-            }
+            $explorer = $this.GetOrOpenExplorer()
 
             if (-not $explorer)
             {
                 return
             }
 
-            $olModuleCalendar = 1
             $olCalendarView = 2
-
-            $calendarModule = $explorer.NavigationPane.Modules.GetNavigationModule($olModuleCalendar)
-            $explorer.NavigationPane.CurrentModule = $calendarModule
+            $explorer.CurrentFolder = $this.folder
 
             $view = $explorer.CurrentView
             if (($view.ViewType -eq $olCalendarView) -and ($viewMode -ne [CalendarViewMode]::Default))
@@ -281,5 +268,29 @@ class OutlookCalendar
         {
             Write-Host "Focus failed. [$PSItem]"
         }
+    }
+
+    [Object] GetOrOpenExplorer()
+    {
+        $explorer = $this.outlook.ActiveExplorer()
+        if ($explorer)
+        {
+            return $explorer
+        }
+
+        $this.folder.Display()
+        $explorer = $this.outlook.ActiveExplorer()
+        if ($explorer)
+        {
+            return $explorer
+        }
+
+        $olFolderInbox = 6
+        $inbox = $this.namespace.GetDefaultFolder($olFolderInbox)
+        if ($inbox)
+        {
+            $inbox.Display()
+        }
+        return $this.outlook.ActiveExplorer()
     }
 }

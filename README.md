@@ -16,10 +16,11 @@ Outlook Calendar Shortcut is a Windows taskbar application that works as a short
 - Notifies today's remaining event count
 - Customizable icons and badge colors
 - Quick access to the Day, Week and Month views with Thumb buttons
+- Shows a mini daily schedule (upcoming events from now) in the taskbar hover preview
 
 ## Requirements
 - Tested on Windows 10/11 and Powershell 5.1
-- Outlook desktop app needs to be installed
+- Outlook Classic desktop app (Win32/COM) needs to be installed
 
 ## Installation
 1. Download and extract the [zip](https://github.com/mdgrs-mei/outlook-calendar-shortcut/releases/latest/download/outlook-calendar-shortcut.zip) or clone this repository anywhere you like
