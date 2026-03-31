@@ -8,6 +8,8 @@ class Window
     $timer
     $onClicked
     $lastOverlayCount = 0
+    $headerDayText
+    $headerDateText
     $dailyPreviewText
 
     [void] Init($xamlPath, $title, $settings)
@@ -18,6 +20,8 @@ class Window
         $nodeReader = (New-Object System.Xml.XmlNodeReader $xaml)
         $this.window = [System.Windows.Markup.XamlReader]::Load($nodeReader)
         $this.window.Title = $title
+        $this.headerDayText = $this.window.FindName("HeaderDayText")
+        $this.headerDateText = $this.window.FindName("HeaderDateText")
         $this.dailyPreviewText = $this.window.FindName("DailyPreviewText")
 
         $iconPath = GetFullPathFromSettingsRelativePath $settings $settings.iconPath
@@ -26,7 +30,8 @@ class Window
             $this.window.Icon = $iconPath
         }
 
-        # Start with Normal window to make Windows draw preview window.
+        # Start Normal so Windows registers the taskbar item and captures
+        # the thumbnail. OnContentRendered immediately minimizes it.
         $this.window.WindowState = [System.Windows.WindowState]::Normal
 
         $class = $this
@@ -94,6 +99,20 @@ class Window
         $this.window.TaskbarItemInfo.Description = $text
     }
 
+    [void] UpdatePreviewHeader()
+    {
+        $now = Get-Date
+        $day = $now.ToString("dddd").ToUpper()
+        if ($this.headerDayText)
+        {
+            $this.headerDayText.Text = "TODAY  $day"
+        }
+        if ($this.headerDateText)
+        {
+            $this.headerDateText.Text = $now.ToString("M/d/yy")
+        }
+    }
+
     [void] SetDailyPreviewText($text)
     {
         if (-not $this.dailyPreviewText)
@@ -104,10 +123,11 @@ class Window
         if ($text)
         {
             $this.dailyPreviewText.Text = $text
-            return
         }
-
-        $this.dailyPreviewText.Text = "No upcoming events."
+        else
+        {
+            $this.dailyPreviewText.Text = "No upcoming events"
+        }
     }
 
     [Object] AddThumbButton($thumbButtonSetting)

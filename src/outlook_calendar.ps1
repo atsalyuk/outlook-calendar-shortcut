@@ -177,6 +177,30 @@ class OutlookCalendar
         return $summary
     }
 
+    [String] GetTodaysRemainingItemsPreview($maxItemCount)
+    {
+        $preview = ""
+        $items = $this.GetTodaysRemainingItems()
+        $count = 0
+        foreach ($item in $items)
+        {
+            if ($count -eq $maxItemCount)
+            {
+                $preview += "..."
+                break
+            }
+            if ($count -gt 0)
+            {
+                $preview += "`n"
+            }
+            $startTime = $item.Start.ToString("h:mm")
+            $endTime = $item.End.ToString("h:mm tt")
+            $preview += "{0} `u{2013} {1}`n{2}" -f $startTime, $endTime, $item.Subject
+            ++$count
+        }
+        return $preview
+    }
+
     [Object] GetTodaysNextItem()
     {
         $items = $this.GetTodaysRemainingItems()

@@ -5,21 +5,31 @@ AllowsTransparency="True"
 Background="Transparent"
 WindowStyle="None">
     <Grid>
-        <Border Margin="8"
-                Padding="8"
-                Background="#D91F1F1F"
+        <Border Padding="12,10,12,10"
+                Background="#E6222222"
                 CornerRadius="6">
             <StackPanel>
-                <TextBlock Text="Today's Schedule"
-                           Foreground="White"
-                           FontSize="12"
-                           FontWeight="Bold"
-                           Margin="0,0,0,6"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                    <TextBlock Name="HeaderDayText"
+                               Text="TODAY"
+                               Foreground="White"
+                               FontFamily="Segoe UI"
+                               FontSize="13"
+                               FontWeight="Bold"/>
+                    <TextBlock Name="HeaderDateText"
+                               Text=""
+                               Foreground="#99FFFFFF"
+                               FontFamily="Segoe UI"
+                               FontSize="13"
+                               Margin="8,0,0,0"/>
+                </StackPanel>
+                <Border Height="1" Background="#33FFFFFF" Margin="0,0,0,8"/>
                 <TextBlock Name="DailyPreviewText"
-                           Text="No upcoming events."
-                           Foreground="White"
-                           FontFamily="Consolas"
-                           FontSize="11"
+                           Text="No upcoming events"
+                           Foreground="#BBFFFFFF"
+                           FontFamily="Segoe UI"
+                           FontSize="11.5"
+                           LineHeight="17"
                            TextWrapping="Wrap"/>
             </StackPanel>
         </Border>
