@@ -19,7 +19,7 @@ Outlook Calendar Shortcut is a Windows taskbar application that works as a short
 
 ## Requirements
 - Tested on Windows 10/11 and Powershell 5.1
-- Outlook desktop app needs to be installed
+- Outlook Classic desktop app (Win32/COM) needs to be installed
 
 ## Installation
 1. Download and extract the [zip](https://github.com/mdgrs-mei/outlook-calendar-shortcut/releases/latest/download/outlook-calendar-shortcut.zip) or clone this repository anywhere you like
