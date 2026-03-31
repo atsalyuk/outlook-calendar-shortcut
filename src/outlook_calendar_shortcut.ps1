@@ -42,12 +42,22 @@ function TimerFunction()
 {
     $calendar.InitOutlookIfNotValid()
 
+    $window.UpdatePreviewHeader()
+
     if ($settings.todaysRemainingItemsSummary.enable)
-    {    
+    {
         $eventsSummary = $calendar.GetTodaysRemainingItemsSummary(
             $settings.todaysRemainingItemsSummary.maxItemCount,
             $settings.todaysRemainingItemsSummary.maxItemCharacterCount)
         $window.SetTaskbarItemInfoDescription($eventsSummary)
+
+        $previewText = $calendar.GetTodaysRemainingItemsPreview(
+            $settings.todaysRemainingItemsSummary.maxItemCount)
+        $window.SetDailyPreviewText($previewText)
+    }
+    else
+    {
+        $window.SetDailyPreviewText("")
     }
 
     if ($settings.overlayIcon.enable)

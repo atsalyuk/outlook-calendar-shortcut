@@ -110,7 +110,7 @@ class OutlookCalendar
             return $errorItemCount
         }
 
-        try 
+        try
         {
             $items = $this.GetTodaysRemainingItems()
             if (-not $items)
@@ -145,7 +145,7 @@ class OutlookCalendar
         $endOfToday = $now.AddDays(1).Date
         $nowString = $now.ToString("g")
         $endOfTodayString = $endOfToday.ToString("g")
-        $query = "[Start] < '$endOfTodayString' And [End] > '$nowString'"
+        $query = "[Start] >= '$nowString' And [Start] < '$endOfTodayString'"
 
         $items = $this.folder.Items
         $items.IncludeRecurrences = $true
@@ -175,6 +175,30 @@ class OutlookCalendar
             ++$count
         }
         return $summary
+    }
+
+    [String] GetTodaysRemainingItemsPreview($maxItemCount)
+    {
+        $preview = ""
+        $items = $this.GetTodaysRemainingItems()
+        $count = 0
+        foreach ($item in $items)
+        {
+            if ($count -eq $maxItemCount)
+            {
+                $preview += "..."
+                break
+            }
+            if ($count -gt 0)
+            {
+                $preview += "`n"
+            }
+            $startTime = $item.Start.ToString("h:mm")
+            $endTime = $item.End.ToString("h:mm tt")
+            $preview += "{0} `u{2013} {1}`n{2}" -f $startTime, $endTime, $item.Subject
+            ++$count
+        }
+        return $preview
     }
 
     [Object] GetTodaysNextItem()
@@ -237,28 +261,15 @@ class OutlookCalendar
 
         try
         {
-            $explorer = $this.outlook.ActiveExplorer()
-            if (-not $explorer)
-            {
-                $olFolderInbox = 6
-                $inbox = $this.namespace.GetDefaultFolder($olFolderInbox)
-                if ($inbox)
-                {
-                    $inbox.Display()
-                }
-                $explorer = $this.outlook.ActiveExplorer()
-            }
+            $explorer = $this.GetOrOpenExplorer()
 
             if (-not $explorer)
             {
                 return
             }
 
-            $olModuleCalendar = 1
             $olCalendarView = 2
-
-            $calendarModule = $explorer.NavigationPane.Modules.GetNavigationModule($olModuleCalendar)
-            $explorer.NavigationPane.CurrentModule = $calendarModule
+            $explorer.CurrentFolder = $this.folder
 
             $view = $explorer.CurrentView
             if (($view.ViewType -eq $olCalendarView) -and ($viewMode -ne [CalendarViewMode]::Default))
@@ -277,9 +288,33 @@ class OutlookCalendar
             $explorer.Activate()
             FocusApp "outlook"
         }
-        catch 
+        catch
         {
             Write-Host "Focus failed. [$PSItem]"
         }
+    }
+
+    [Object] GetOrOpenExplorer()
+    {
+        $explorer = $this.outlook.ActiveExplorer()
+        if ($explorer)
+        {
+            return $explorer
+        }
+
+        $this.folder.Display()
+        $explorer = $this.outlook.ActiveExplorer()
+        if ($explorer)
+        {
+            return $explorer
+        }
+
+        $olFolderInbox = 6
+        $inbox = $this.namespace.GetDefaultFolder($olFolderInbox)
+        if ($inbox)
+        {
+            $inbox.Display()
+        }
+        return $this.outlook.ActiveExplorer()
     }
 }
