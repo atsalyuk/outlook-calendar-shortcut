@@ -30,7 +30,8 @@ class Window
             $this.window.Icon = $iconPath
         }
 
-        # Start with Normal window to make Windows draw preview window.
+        # Start Normal so Windows registers the taskbar item and captures
+        # the thumbnail. OnContentRendered immediately minimizes it.
         $this.window.WindowState = [System.Windows.WindowState]::Normal
 
         $class = $this
