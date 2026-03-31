@@ -5,24 +5,6 @@ AllowsTransparency="True"
 Background="Transparent"
 WindowStyle="None">
     <Grid>
-        <Border Margin="8"
-                Padding="8"
-                Background="#D91F1F1F"
-                CornerRadius="6">
-            <StackPanel>
-                <TextBlock Text="Today's Schedule"
-                           Foreground="White"
-                           FontSize="12"
-                           FontWeight="Bold"
-                           Margin="0,0,0,6"/>
-                <TextBlock Name="DailyPreviewText"
-                           Text="No upcoming events."
-                           Foreground="White"
-                           FontFamily="Consolas"
-                           FontSize="11"
-                           TextWrapping="Wrap"/>
-            </StackPanel>
-        </Border>
     </Grid>
     <Window.TaskbarItemInfo>
          <TaskbarItemInfo>

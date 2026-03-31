@@ -8,7 +8,6 @@ class Window
     $timer
     $onClicked
     $lastOverlayCount = 0
-    $dailyPreviewText
 
     [void] Init($xamlPath, $title, $settings)
     {
@@ -18,7 +17,6 @@ class Window
         $nodeReader = (New-Object System.Xml.XmlNodeReader $xaml)
         $this.window = [System.Windows.Markup.XamlReader]::Load($nodeReader)
         $this.window.Title = $title
-        $this.dailyPreviewText = $this.window.FindName("DailyPreviewText")
 
         $iconPath = GetFullPathFromSettingsRelativePath $settings $settings.iconPath
         if ($iconPath)
@@ -92,22 +90,6 @@ class Window
     [void] SetTaskbarItemInfoDescription($text)
     {
         $this.window.TaskbarItemInfo.Description = $text
-    }
-
-    [void] SetDailyPreviewText($text)
-    {
-        if (-not $this.dailyPreviewText)
-        {
-            return
-        }
-
-        if ($text)
-        {
-            $this.dailyPreviewText.Text = $text
-            return
-        }
-
-        $this.dailyPreviewText.Text = "No upcoming events."
     }
 
     [Object] AddThumbButton($thumbButtonSetting)
