@@ -5,6 +5,25 @@ AllowsTransparency="True"
 Background="Transparent"
 WindowStyle="None">
     <Grid>
+        <Border Padding="10"
+                Background="#E6222222"
+                CornerRadius="4">
+            <StackPanel>
+                <TextBlock Text="&#128197; Today"
+                           Foreground="#90CAF9"
+                           FontSize="13"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,4"/>
+                <Border Height="1" Background="#33FFFFFF" Margin="0,0,0,6"/>
+                <TextBlock Name="DailyPreviewText"
+                           Text="No upcoming events"
+                           Foreground="#DDFFFFFF"
+                           FontFamily="Segoe UI"
+                           FontSize="11.5"
+                           LineHeight="18"
+                           TextWrapping="Wrap"/>
+            </StackPanel>
+        </Border>
     </Grid>
     <Window.TaskbarItemInfo>
          <TaskbarItemInfo>
