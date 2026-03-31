@@ -1,0 +1,15 @@
+{
+    "outlook": {
+        "folderPath": "\\\\your-email@example.com\\Calendar"
+    },
+    "updateIntervalSeconds": 30,
+    "badge": {
+        "enabled": true,
+        "backgroundColor": [220, 80, 80],
+        "textColor": [255, 255, 255]
+    },
+    "tooltip": {
+        "maxItems": 6
+    },
+    "clickAction": "FocusOnCalendar"
+}
