@@ -145,7 +145,7 @@ class OutlookCalendar
         $endOfToday = $now.AddDays(1).Date
         $nowString = $now.ToString("g")
         $endOfTodayString = $endOfToday.ToString("g")
-        $query = "[Start] < '$endOfTodayString' And [End] > '$nowString'"
+        $query = "[Start] >= '$nowString' And [Start] < '$endOfTodayString'"
 
         $items = $this.folder.Items
         $items.IncludeRecurrences = $true

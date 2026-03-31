@@ -30,11 +30,7 @@ class Window
             $this.window.Icon = $iconPath
         }
 
-        # Position off-screen so the window is never visible on the desktop,
-        # but its content still renders for the taskbar thumbnail preview.
-        $this.window.Left = -10000
-        $this.window.Top = -10000
-        $this.window.ShowActivated = $false
+        # Start with Normal window to make Windows draw preview window.
         $this.window.WindowState = [System.Windows.WindowState]::Normal
 
         $class = $this
