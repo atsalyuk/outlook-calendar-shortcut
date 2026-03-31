@@ -48,6 +48,11 @@ function TimerFunction()
             $settings.todaysRemainingItemsSummary.maxItemCount,
             $settings.todaysRemainingItemsSummary.maxItemCharacterCount)
         $window.SetTaskbarItemInfoDescription($eventsSummary)
+        $window.SetDailyPreviewText($eventsSummary)
+    }
+    else
+    {
+        $window.SetDailyPreviewText("")
     }
 
     if ($settings.overlayIcon.enable)
